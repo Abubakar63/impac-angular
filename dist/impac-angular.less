@@ -2644,17 +2644,6 @@ dashboard-templates-selector {
   .overlay, .title, .btn, .example { display: none; }
 }
 
-.analytics common-delete-widget {
-  .widget-popup();
-  .message {
-    .loader i.fa.fa-spinner {
-      font-size: 26px;
-    }
-    p { padding: 0px 10px; }
-    button.btn { margin-top: 20px; }
-  }
-}
-
 #duplicate-transactions-list {
   .top {
     height: 40px;
@@ -2692,6 +2681,17 @@ dashboard-templates-selector {
         background-color: lighten(#c76379, 20%);
       }
     }
+  }
+}
+
+.analytics common-delete-widget {
+  .widget-popup();
+  .message {
+    .loader i.fa.fa-spinner {
+      font-size: 26px;
+    }
+    p { padding: 0px 10px; }
+    button.btn { margin-top: 20px; }
   }
 }
 
@@ -2919,6 +2919,12 @@ dashboard-templates-selector {
   }
 }
 
+.analytics .widget-item .content.accounts-assets-vs-liabilities {
+  .legend > .title span {
+    margin-left: 3px;
+  }
+}
+
 .analytics .widget-item .content.accounts-assets-summary {
   .legend {
     text-align: left;
@@ -2928,12 +2934,6 @@ dashboard-templates-selector {
       text-align: center;
       border-bottom: dashed 1px @impac-widget-borders-color;
     }
-  }
-}
-
-.analytics .widget-item .content.accounts-assets-vs-liabilities {
-  .legend > .title span {
-    margin-left: 3px;
   }
 }
 
@@ -3032,18 +3032,6 @@ dashboard-templates-selector {
   }
 }
 
-.analytics .widget-item .content.accounts-cash-summary {
-  .drill-down-widget();
-  .right-panel .widget-lines-container {
-    max-height: 215px;
-  }
-
-  .row.lines-group.cash {
-    border-top: solid 1px;
-    border-bottom: double;
-  }
-}
-
 .analytics .widget-item .content.accounts-cash-projection {
   .tall-widget();
 
@@ -3085,6 +3073,40 @@ dashboard-templates-selector {
   .widget-lines-container {
     max-height: 94px;
     color: #626d6d;
+  }
+}
+
+.analytics .widget-item .content.accounts-custom-calculation {
+  h3 {
+    margin-top: 85px;
+    text-align: center;
+    font-weight: bold;
+  }
+  .legend { max-height: 125px; }
+}
+
+.analytics.modal-custom-calculation {
+  margin: 0px;
+  padding: 0px;
+}
+
+.analytics.modal-custom-calculation .modal-body {
+  .edit {
+    .edit-panel-style();
+    padding: 5px;
+    overflow: visible;
+  }
+}
+
+.analytics .widget-item .content.accounts-cash-summary {
+  .drill-down-widget();
+  .right-panel .widget-lines-container {
+    max-height: 215px;
+  }
+
+  .row.lines-group.cash {
+    border-top: solid 1px;
+    border-bottom: double;
   }
 }
 
@@ -3153,28 +3175,6 @@ dashboard-templates-selector {
   }
 }
 
-.analytics .widget-item .content.accounts-custom-calculation {
-  h3 {
-    margin-top: 85px;
-    text-align: center;
-    font-weight: bold;
-  }
-  .legend { max-height: 125px; }
-}
-
-.analytics.modal-custom-calculation {
-  margin: 0px;
-  padding: 0px;
-}
-
-.analytics.modal-custom-calculation .modal-body {
-  .edit {
-    .edit-panel-style();
-    padding: 5px;
-    overflow: visible;
-  }
-}
-
 .analytics .widget-item .content.accounts-detailed-classifications {
   .tall-widget();
   .widget-lines-container {
@@ -3221,6 +3221,31 @@ dashboard-templates-selector {
   }
 }
 
+.analytics .widget-item .content.accounts-invoices-list {
+  // component specific styles
+  // -------------------------
+  .tall-widget();
+
+  transactions-list {
+    font-size: 12px;
+  }
+
+}
+
+.analytics .widget-item .content.accounts-payable-receivable {
+  h3 {
+    text-align: center;
+  }
+  .legend {
+    font-weight: bold;
+  }
+  .payable {
+    margin-top: 15px;
+  }
+  .price {
+    .center-bold(0px);
+  }
+}
 .analytics .widget-item .content.accounts-live-balance {
   h3 {
     .center-bold(0px);
@@ -3259,20 +3284,6 @@ dashboard-templates-selector {
   }
 }
 
-.analytics .widget-item .content.accounts-payable-receivable {
-  h3 {
-    text-align: center;
-  }
-  .legend {
-    font-weight: bold;
-  }
-  .payable {
-    margin-top: 15px;
-  }
-  .price {
-    .center-bold(0px);
-  }
-}
 .analytics .widget-item .content.accounts-profit-and-loss {
   .drill-down-widget();
 
