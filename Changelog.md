@@ -1,5 +1,21 @@
 # Impac! Frontend Changelog
 
+### v1.8.0 | 2018 - Week 10
+
+#### Adds
+- [IMPAC-793] Load dynamic generic layout templates for Bolt widgets
+- [IMPAC-791] Add generic table layout template
+
+#### Fixes
+
+-------------------------------------------------------------
+
+### v1.7.3 | 2018 - Week 6
+
+Applies v1.6.9
+
+-------------------------------------------------------------
+
 ### v1.6.9 | 2018 - Week 6
 
 #### Adds
@@ -18,15 +34,9 @@
 
 -------------------------------------------------------------
 
-### v1.6.8 | 2018 - Week 3
+### v1.7.2 | 2018 - Week 3
 
-#### Adds
-- [IMPAC-734] Update generator EJS dep to latest
-- [IMPAC-665] Improve sync status messaging
-- Ability to differentiate bolt widgets from legacy widgets when black/whitelisting (required for Finance Bolt >= 1.5.0)
-
-#### Fixes
-- [EMERALDSUP-69] hide x axis labels from custom calc chart
+Applies v1.6.8
 
 -------------------------------------------------------------
 
@@ -39,6 +49,12 @@
 
 #### Fixes
 - [EMERALDSUP-69] hide x axis labels from custom calc chart
+
+-------------------------------------------------------------
+
+### v1.7.1 | 2017 - Week 49
+
+Applies v1.6.7
 
 -------------------------------------------------------------
 
@@ -49,6 +65,28 @@
 
 #### Fixes
 - [IMPAC-727] [IMPAC-728] Fixes incompatibilities with IE11
+
+-------------------------------------------------------------
+
+### v1.7.0 | 2017 - Week 49
+
+#### Adds
+- Refactor dashboard creation capability to a separate component
+- Base controls on ACL for user / organization
+
+#### Dependencies
+- MnoHub v2.0.0-rc8
+- Mno Enterprise v3.4
+- Mno Enterprise Angular v1.2
+
+#### Config changes
+- Removed deprecated config params:
+```coffeescript
+dhbSelectorConfig:
+  addWidgetEnabled: true
+  addDhbEnabled: true
+  deleteDhbEnabled: true
+```
 
 -------------------------------------------------------------
 

@@ -1,5 +1,5 @@
 module = angular.module('impac.components.widgets-common.top-buttons', [])
-module.controller('CommonTopButtonsCtrl', ($scope, $rootScope, $log, ImpacWidgetsSvc, ImpacAssets, ImpacUtilities) ->
+module.controller('CommonTopButtonsCtrl', ($scope, $rootScope, $log, ImpacWidgetsSvc, ImpacAssets) ->
 
   w = $scope.parentWidget
   w.isEditMode = false
@@ -26,6 +26,7 @@ module.directive('commonTopButtons', ($templateCache) ->
       onRefresh: '='
       onToggleInfoPanel: '&'
       onToggleDeleteWidget: '&'
+      userAccesses: '='
     },
     template: $templateCache.get('widgets-common/top-buttons.tmpl.html'),
     controller: 'CommonTopButtonsCtrl'

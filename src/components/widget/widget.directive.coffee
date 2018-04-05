@@ -63,7 +63,7 @@ module.controller('ImpacWidgetCtrl', ($scope, $log, $q, $timeout, ImpacWidgetsSv
     ImpacDashboardsSvc.tick()
 )
 
-module.directive('impacWidget', ($templateCache, ImpacUtilities, ImpacWidgetsSvc) ->
+module.directive('impacWidget', ($log, $templateCache, ImpacUtilities, ImpacWidgetsSvc, ImpacWidgetsTemplates, toastr) ->
   return {
     restrict: 'A',
     scope: {
@@ -71,24 +71,26 @@ module.directive('impacWidget', ($templateCache, ImpacUtilities, ImpacWidgetsSvc
       widget: '='
       isAccessibility: '='
       onDisplayAlerts: '&'
+      userAccesses: '='
     },
     controller: 'ImpacWidgetCtrl',
     link: (scope, element) ->
-
       # initialize scope attributes
       # --------------------------------------
-      scope.widget.isLoading = true
-      scope.widget.settings = []
-      scope.pdfMode = false
-      # Unused so far -->
-      scope.widget.hasEditAbility = true
-      scope.widget.hasDeleteAbility = true
-      # <--
+      onInit = ->
+        scope.showInfoPanel = false
+        scope.pdfMode = false
+        scope.widget.isLoading = true
+        scope.widget.settings = []
+        # Unused so far -->
+        scope.widget.hasEditAbility = true
+        scope.widget.hasDeleteAbility = true
+        # <--
 
-      scope.cssClass = ImpacUtilities.fetchWidgetCssClass(scope.widget)
-      scope.templatePath = ImpacUtilities.fetchWidgetTemplatePath(scope.widget)
+        scope.cssClass = ImpacWidgetsTemplates.filename(scope.widget)
+        scope.templatePath = ImpacWidgetsTemplates.templatePath(scope.widget)
+        _handleNoTemplateFound() unless scope.templatePath
 
-      scope.showInfoPanel = false
       scope.isInfoPanelDisplayed = ->
         scope.showInfoPanel
 
@@ -110,6 +112,14 @@ module.directive('impacWidget', ($templateCache, ImpacUtilities, ImpacWidgetsSvc
         ImpacWidgetsSvc.delete(scope.widget)
         .then(null, (e) -> scope.widget.errors = ImpacUtilities.processRailsError(e))
 
+      _handleNoTemplateFound = ->
+        toastr.warning('See browser console for more details', "No template found for #{scope.widget.name}")
+        $log.error("No template or generic layout template found for #{scope.widget.name}, either add a custom template or blacklist the widget via the ImpacTheming service.")
+        scope.deleteWidget()
+
+      onInit()
+
+      return
     ,template: $templateCache.get('widget/widget.tmpl.html')
   }
 )

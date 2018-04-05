@@ -74,6 +74,9 @@
 @impac-dashboard-source-color:                  @impac-dashboard-title-label-color;
 @impac-dashboard-buttons-border-radius:         4px;
 
+// Create
+@impac-dashboard-create-button-color:           @impac-dashboard-title-color;
+
 //Info-text
 @impac-dashboard-info-text-color:               white;
 @impac-dashboard-info-text-background-color:    rgba(23,38,45, 0.7);
@@ -1739,7 +1742,6 @@ body {
         background-color: @impac-dashboard-info-text-background-color;
       }
     }
-
   }
 
   // parent div section for widgets to be housed.
@@ -1780,14 +1782,6 @@ body {
   font-size: 14px;
 }
 
-.dhb-create-modal .dashboard-form {
-
-  // Better aligns form labels with templates section label
-  .col-sm-2.control-label {
-    text-align: left;
-  }
-}
-
 .impac-widget-suggestion .modal-body {
   input,textarea {
     width: 100%;
@@ -1807,6 +1801,27 @@ body {
   .loader-style(@impac-dashboard-loading-spinner)
 }
 
+
+.analytics .dashboard-create {
+  .btn-create {
+    background-color: @impac-dashboard-create-button-color;
+  }
+}
+
+.modal.impac-dashboard-create {
+  h1 { font-size: 24px; }
+  .fa.fa-times {
+    float: right;
+    color: #ccc;
+    cursor: pointer;
+  }
+  .control-label { text-align: left; }
+  .modal-footer {
+    .loader {
+      .loader-style(@impac-dashboard-loading-spinner)
+    }
+  }
+}
 
 #module__dashboard-selector {
   a {
@@ -1871,13 +1886,14 @@ body {
           &:hover {
             background-color: @impac-widget-background-color;
           }
-          &.create {
-            background-color: @impac-dashboard-title-color;
-            color: @impac-dashboard-title-label-create-color;
-            height: 30px;
-            padding: 5px 10px 5px 10px;
-            &:hover {
-              background-color: darken(@impac-dashboard-title-color,10%);
+          &.dashboard-create {
+            height: 33px;
+            .btn {
+              float: none;
+              width: 100%;
+              text-align: left;
+              margin: 0px;
+              border-radius: 0px;
             }
           }
           i.fa.fa-pencil {
@@ -2039,6 +2055,169 @@ dashboard-templates-selector {
     }
   }
 }
+
+.analytics kpis-bar > .kpis {
+  position: relative;
+  .actions {
+    margin-bottom: 12px;
+    @media screen and (max-width: 675px) {
+      position: relative;
+    }
+
+    .impac-material(@kpi-settings-focus-color, @kpi-settings-error-color);
+
+    a { color: white; }
+
+    button.im-fab.add-kpis,
+    button.im-fab.edit-kpis,
+    button.im-fab.toggle-show-content {
+      position: absolute;
+      width: 40px;
+      height: 40px;
+      font-size: 18px;
+      transition: all 0.28s ease-in;
+      &.im-primary {
+        background: #4c4749;
+        &.disabled {
+          background: #b2b5c1;
+          cursor: not-allowed;
+          a { cursor: not-allowed; }
+        }
+        &:hover:not(.disabled) {
+          background: black;
+        }
+      }
+    }
+
+    button.im-fab.toggle-show-content {
+      top: -15px;
+      right: -15px;
+      z-index: 10;
+      @media screen and (max-width: 675px) {
+        top: -30px;
+        right: -14px;
+        bottom: 0;
+      }
+    }
+
+    button.im-fab.add-kpis {
+      top: 30px;
+      right: -15px;
+      z-index: 10;
+      @media screen and (max-width: 675px) {
+        top: -30px;
+        right: 33px;
+        bottom: 0;
+      }
+    }
+
+    button.im-fab.edit-kpis {
+      top: 75px;
+      right: -15px;
+      z-index: 10;
+      &.editing {
+        background: @kpi-settings-focus-color;
+        &:hover:not(.disabled) {
+          background: lighten(@kpi-settings-focus-color, 15%);
+        }
+      }
+      @media screen and (max-width: 675px) {
+        top: -30px;
+        right: 79px;
+        bottom: 0;
+      }
+    }
+  }
+
+  .content-buttons {
+    position: absolute;
+    top: 0;
+    right: 0;
+  }
+
+  .content {
+    padding: 15px;
+    background-color: @kpis-bar-background-color;
+    box-shadow: @kpis-bar-box-shadow;
+
+    @media screen and (min-width: 725px) {
+      padding: 0 60px;
+    }
+
+    @media screen and (max-width: 675px) {
+      margin-top: 25px;
+    }
+
+    .impac-kpi {
+      .column-gutter(5px);
+
+      @media screen and (min-width: 1200px) {
+        padding-left: 20px;
+        padding-right: 20px;
+      }
+
+      .kpi.add {
+        .kpi-show .caption {
+          white-space: inherit;
+        }
+      }
+    }
+
+
+    .title {
+      .text-center {
+        line-height: 3;
+        font-variant: small-caps;
+        font-size: larger;
+      }
+      .badge {
+        position: absolute;
+        top: 8px;
+        left: -10px;
+        background-color: #d1e55c;
+        color: #4f5959;
+        box-shadow: 0px 1px 3px -1px;
+      }
+      .no-kpi-templates {
+        color: #afadb5;
+        font-weight: 500;
+      }
+    }
+
+    .add-bar {
+      border-bottom: dashed 1px;
+    }
+
+    .kpi-loader {
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      min-height: @kpi-max-height + 20px;
+    }
+
+    .dates-picker-container {
+      width: 40%;
+      margin: 0 auto;
+
+      .sdp-from-label,
+      .sdp-to-label {
+        text-transform: uppercase;
+        font-weight: 400;
+      }
+    }
+  }
+}
+
+.analytics kpis-bar {
+  display: block;
+}
+
+.analytics kpis-bar > .key-stats {
+  background-color: white;
+  padding: 5px 0px;
+}
+
+.analytics.pdf-mode kpis-bar > .kpis .actions { display: none; }
 
 .analytics .impac-kpi .kpi {
   position: relative;
@@ -2278,169 +2457,6 @@ dashboard-templates-selector {
   min-height: 80px;
 }
 
-.analytics kpis-bar > .kpis {
-  position: relative;
-  .actions {
-    margin-bottom: 12px;
-    @media screen and (max-width: 675px) {
-      position: relative;
-    }
-
-    .impac-material(@kpi-settings-focus-color, @kpi-settings-error-color);
-
-    a { color: white; }
-
-    button.im-fab.add-kpis,
-    button.im-fab.edit-kpis,
-    button.im-fab.toggle-show-content {
-      position: absolute;
-      width: 40px;
-      height: 40px;
-      font-size: 18px;
-      transition: all 0.28s ease-in;
-      &.im-primary {
-        background: #4c4749;
-        &.disabled {
-          background: #b2b5c1;
-          cursor: not-allowed;
-          a { cursor: not-allowed; }
-        }
-        &:hover:not(.disabled) {
-          background: black;
-        }
-      }
-    }
-
-    button.im-fab.toggle-show-content {
-      top: -15px;
-      right: -15px;
-      z-index: 10;
-      @media screen and (max-width: 675px) {
-        top: -30px;
-        right: -14px;
-        bottom: 0;
-      }
-    }
-
-    button.im-fab.add-kpis {
-      top: 30px;
-      right: -15px;
-      z-index: 10;
-      @media screen and (max-width: 675px) {
-        top: -30px;
-        right: 33px;
-        bottom: 0;
-      }
-    }
-
-    button.im-fab.edit-kpis {
-      top: 75px;
-      right: -15px;
-      z-index: 10;
-      &.editing {
-        background: @kpi-settings-focus-color;
-        &:hover:not(.disabled) {
-          background: lighten(@kpi-settings-focus-color, 15%);
-        }
-      }
-      @media screen and (max-width: 675px) {
-        top: -30px;
-        right: 79px;
-        bottom: 0;
-      }
-    }
-  }
-
-  .content-buttons {
-    position: absolute;
-    top: 0;
-    right: 0;
-  }
-
-  .content {
-    padding: 15px;
-    background-color: @kpis-bar-background-color;
-    box-shadow: @kpis-bar-box-shadow;
-
-    @media screen and (min-width: 725px) {
-      padding: 0 60px;
-    }
-
-    @media screen and (max-width: 675px) {
-      margin-top: 25px;
-    }
-
-    .impac-kpi {
-      .column-gutter(5px);
-
-      @media screen and (min-width: 1200px) {
-        padding-left: 20px;
-        padding-right: 20px;
-      }
-
-      .kpi.add {
-        .kpi-show .caption {
-          white-space: inherit;
-        }
-      }
-    }
-
-
-    .title {
-      .text-center {
-        line-height: 3;
-        font-variant: small-caps;
-        font-size: larger;
-      }
-      .badge {
-        position: absolute;
-        top: 8px;
-        left: -10px;
-        background-color: #d1e55c;
-        color: #4f5959;
-        box-shadow: 0px 1px 3px -1px;
-      }
-      .no-kpi-templates {
-        color: #afadb5;
-        font-weight: 500;
-      }
-    }
-
-    .add-bar {
-      border-bottom: dashed 1px;
-    }
-
-    .kpi-loader {
-      display: flex;
-      align-items: center;
-      justify-content: center;
-      min-height: @kpi-max-height + 20px;
-    }
-
-    .dates-picker-container {
-      width: 40%;
-      margin: 0 auto;
-
-      .sdp-from-label,
-      .sdp-to-label {
-        text-transform: uppercase;
-        font-weight: 400;
-      }
-    }
-  }
-}
-
-.analytics kpis-bar {
-  display: block;
-}
-
-.analytics kpis-bar > .key-stats {
-  background-color: white;
-  padding: 5px 0px;
-}
-
-.analytics.pdf-mode kpis-bar > .kpis .actions { display: none; }
-
 .widget-item {
   transition: width 0.3s;
   padding: @impac-padding-between-widgets;
@@ -2644,6 +2660,17 @@ dashboard-templates-selector {
   .overlay, .title, .btn, .example { display: none; }
 }
 
+.analytics common-delete-widget {
+  .widget-popup();
+  .message {
+    .loader i.fa.fa-spinner {
+      font-size: 26px;
+    }
+    p { padding: 0px 10px; }
+    button.btn { margin-top: 20px; }
+  }
+}
+
 #duplicate-transactions-list {
   .top {
     height: 40px;
@@ -2681,17 +2708,6 @@ dashboard-templates-selector {
         background-color: lighten(#c76379, 20%);
       }
     }
-  }
-}
-
-.analytics common-delete-widget {
-  .widget-popup();
-  .message {
-    .loader i.fa.fa-spinner {
-      font-size: 26px;
-    }
-    p { padding: 0px 10px; }
-    button.btn { margin-top: 20px; }
   }
 }
 
@@ -2919,12 +2935,6 @@ dashboard-templates-selector {
   }
 }
 
-.analytics .widget-item .content.accounts-assets-vs-liabilities {
-  .legend > .title span {
-    margin-left: 3px;
-  }
-}
-
 .analytics .widget-item .content.accounts-assets-summary {
   .legend {
     text-align: left;
@@ -2934,6 +2944,12 @@ dashboard-templates-selector {
       text-align: center;
       border-bottom: dashed 1px @impac-widget-borders-color;
     }
+  }
+}
+
+.analytics .widget-item .content.accounts-assets-vs-liabilities {
+  .legend > .title span {
+    margin-left: 3px;
   }
 }
 
@@ -2971,98 +2987,15 @@ dashboard-templates-selector {
   }
 }
 
-.analytics .widget-item .content.accounts-cash-balance {
-  .tall-widget();
-
-  .data-container {
-    height: ~"calc(@{impac-big-widget-size} - 50px)";
-    width: 100%;
+.analytics .widget-item .content.accounts-cash-summary {
+  .drill-down-widget();
+  .right-panel .widget-lines-container {
+    max-height: 215px;
   }
 
-  .left-panel {
-    width: 180px;
-    display: inline-block;
-    overflow: auto;
-    max-height: 100%;
-  }
-
-  #cash-balance-legend {
-    .header {
-      .group-item {
-        display: flex;
-        align-items: center;
-        min-height: 45px;
-        margin: 3px;
-        font-size: 13px;
-        padding: 3px;
-        cursor: pointer;
-        user-select: none;
-        &:hover {
-          background-color: @impac-widget-menus-hover-background-color;
-        }
-        i {
-          font-size: 19px;
-          padding: 4px;
-          margin-top: 1px
-        }
-        span { color: @impac-widget-text-color; }
-      }
-    }
-  }
-
-  .legend-item-icon {
-    width: 16px;
-    height: 16px;
-  }
-
-  .right-panel {
-    width: ~"calc(100% - 180px)";
-    float: right;
-
-    // Highchart container
-    .cash-balance-chart {
-      height: ~"calc(@{impac-big-widget-size} - 50px)";
-    }
-  }
-
-  .dates-picker {
-    display: inline-block;
-    float: right;
-    font-size: 12px;
-  }
-}
-
-.analytics .widget-item .content.accounts-cash-projection {
-  .tall-widget();
-
-  .cash-projection-chart {
-    height: ~"calc(@{impac-big-widget-size} - 50px)";
-  }
-
-  .highcharts-legend-item {
-    rect.highcharts-point {
-      display: none;
-    }
-
-    span {
-      width: 110px;
-      text-align: center;
-      img {
-        text-align: center;
-        width: 55px;
-        height: 25px;
-      }
-    }
-  }
-
-  .dates-picker {
-    display: inline-block;
-    float: right;
-    font-size: 12px;
-  }
-
-  transactions-list {
-    font-size: 12px;
+  .row.lines-group.cash {
+    border-top: solid 1px;
+    border-bottom: double;
   }
 }
 
@@ -3073,40 +3006,6 @@ dashboard-templates-selector {
   .widget-lines-container {
     max-height: 94px;
     color: #626d6d;
-  }
-}
-
-.analytics .widget-item .content.accounts-custom-calculation {
-  h3 {
-    margin-top: 85px;
-    text-align: center;
-    font-weight: bold;
-  }
-  .legend { max-height: 125px; }
-}
-
-.analytics.modal-custom-calculation {
-  margin: 0px;
-  padding: 0px;
-}
-
-.analytics.modal-custom-calculation .modal-body {
-  .edit {
-    .edit-panel-style();
-    padding: 5px;
-    overflow: visible;
-  }
-}
-
-.analytics .widget-item .content.accounts-cash-summary {
-  .drill-down-widget();
-  .right-panel .widget-lines-container {
-    max-height: 215px;
-  }
-
-  .row.lines-group.cash {
-    border-top: solid 1px;
-    border-bottom: double;
   }
 }
 
@@ -3175,6 +3074,28 @@ dashboard-templates-selector {
   }
 }
 
+.analytics .widget-item .content.accounts-custom-calculation {
+  h3 {
+    margin-top: 85px;
+    text-align: center;
+    font-weight: bold;
+  }
+  .legend { max-height: 125px; }
+}
+
+.analytics.modal-custom-calculation {
+  margin: 0px;
+  padding: 0px;
+}
+
+.analytics.modal-custom-calculation .modal-body {
+  .edit {
+    .edit-panel-style();
+    padding: 5px;
+    overflow: visible;
+  }
+}
+
 .analytics .widget-item .content.accounts-detailed-classifications {
   .tall-widget();
   .widget-lines-container {
@@ -3232,20 +3153,6 @@ dashboard-templates-selector {
 
 }
 
-.analytics .widget-item .content.accounts-payable-receivable {
-  h3 {
-    text-align: center;
-  }
-  .legend {
-    font-weight: bold;
-  }
-  .payable {
-    margin-top: 15px;
-  }
-  .price {
-    .center-bold(0px);
-  }
-}
 .analytics .widget-item .content.accounts-live-balance {
   h3 {
     .center-bold(0px);
@@ -3284,6 +3191,20 @@ dashboard-templates-selector {
   }
 }
 
+.analytics .widget-item .content.accounts-payable-receivable {
+  h3 {
+    text-align: center;
+  }
+  .legend {
+    font-weight: bold;
+  }
+  .payable {
+    margin-top: 15px;
+  }
+  .price {
+    .center-bold(0px);
+  }
+}
 .analytics .widget-item .content.accounts-profit-and-loss {
   .drill-down-widget();
 
@@ -4053,6 +3974,42 @@ chart-threshold {
   }
 }
 
+.analytics .widget-item .content .table-layout {
+
+  table {
+    width: 100%;
+    max-width: 100%;
+
+    th,
+    td:not(.nested-table) {
+      color: @mediumblue;
+      border-bottom: solid 1px @lightgray;
+      padding: 5px 0;
+
+      &:not(:first-child) {
+        text-align: right;
+      }
+    }
+
+    th[ng-click] {
+      cursor: pointer;
+    }
+  }
+
+  #table-layout {
+    & > thead tr:first-child {
+      .font(12px,500,@impac-widget-text-color-medium);
+      text-transform: uppercase;
+      border-bottom: 2px solid @lightgray;
+      padding: 5px 0;
+    }
+
+    .nested-table {
+      i.fa { padding-right: 5px; }
+    }
+  }
+}
+
 .analytics .widget-item .content .settings.select-account {
   padding: 0px 5px;
 }
@@ -4493,5 +4450,99 @@ chart-threshold {
     &.expand {
       margin-right: -3px;
     }
+  }
+}
+.analytics .widget-item .content.accounts-cash-balance {
+  .tall-widget();
+
+  .data-container {
+    height: ~"calc(@{impac-big-widget-size} - 50px)";
+    width: 100%;
+  }
+
+  .left-panel {
+    width: 180px;
+    display: inline-block;
+    overflow: auto;
+    max-height: 100%;
+  }
+
+  #cash-balance-legend {
+    .header {
+      .group-item {
+        display: flex;
+        align-items: center;
+        min-height: 45px;
+        margin: 3px;
+        font-size: 13px;
+        padding: 3px;
+        cursor: pointer;
+        user-select: none;
+        &:hover {
+          background-color: @impac-widget-menus-hover-background-color;
+        }
+        i {
+          font-size: 19px;
+          padding: 4px;
+          margin-top: 1px
+        }
+        span { color: @impac-widget-text-color; }
+      }
+    }
+  }
+
+  .legend-item-icon {
+    width: 16px;
+    height: 16px;
+  }
+
+  .right-panel {
+    width: ~"calc(100% - 180px)";
+    float: right;
+
+    // Highchart container
+    .cash-balance-chart {
+      height: ~"calc(@{impac-big-widget-size} - 50px)";
+    }
+  }
+
+  .dates-picker {
+    display: inline-block;
+    float: right;
+    font-size: 12px;
+  }
+}
+
+.analytics .widget-item .content.accounts-cash-projection {
+  .tall-widget();
+
+  .cash-projection-chart {
+    height: ~"calc(@{impac-big-widget-size} - 50px)";
+  }
+
+  .highcharts-legend-item {
+    rect.highcharts-point {
+      display: none;
+    }
+
+    span {
+      width: 110px;
+      text-align: center;
+      img {
+        text-align: center;
+        width: 55px;
+        height: 25px;
+      }
+    }
+  }
+
+  .dates-picker {
+    display: inline-block;
+    float: right;
+    font-size: 12px;
+  }
+
+  transactions-list {
+    font-size: 12px;
   }
 }
